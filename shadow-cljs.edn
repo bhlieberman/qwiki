@@ -1,0 +1,22 @@
+;; shadow-cljs configuration
+{:deps true
+ 
+ :dev-http {8080 "resources/public"}
+
+ :builds
+ {:app {:target :esm
+        :output-dir "resources/public/js/app"
+        :asset-path "/js/app"
+        :dev {:compiler-options {:external-config {:fulcro {:html-source-annotations? true}}}}
+        :devtools {:after-load com.bhlie.qwiki.client/refresh
+                   :preloads [com.fulcrologic.fulcro.inspect.preload
+                              com.fulcrologic.fulcro.inspect.dom-picker-preload]}
+        :modules {:main {:init-fn com.bhlie.qwiki.client/init}}}
+  :workspaces {:target     nubank.workspaces.shadow-cljs.target
+               :ns-regexp  "-(test|ws)$"
+               :output-dir "resources/public/workspaces/js"
+               :asset-path "/workspaces/js"
+               :devtools   {:preloads           [com.fulcrologic.fulcro.inspect.preload]
+                            :http-root          "resources/public/workspaces"
+                            :http-port          8023
+                            :http-resource-root "."}}}}
